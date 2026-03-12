@@ -45,7 +45,7 @@
       const text = await res.text();
       return marked.parse(text);
     } catch (e) {
-      return "<p>Failed to load content.</p>";
+      return '<p>Failed to load content. <a href="#/">Return to home page</a>.</p>';
     }
   }
 
@@ -61,7 +61,7 @@
   }
 
   function renderBreadcrumb(items) {
-    return `<nav class="breadcrumb">${items
+    return `<nav class="breadcrumb" aria-label="Breadcrumb">${items
       .map((item, i) => {
         if (i < items.length - 1) {
           return `<a href="${item.href}">${item.label}</a><span class="breadcrumb-sep">/</span>`;
@@ -163,11 +163,11 @@
   async function renderSkillDetail(slug) {
     const skill = CONTENT_REGISTRY.skills.find((s) => s.slug === slug);
     if (!skill) {
-      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Skill not found.</p></div>`;
+      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Skill not found. <a href="#/">Go home</a></p></div>`;
       return;
     }
 
-    mainEl.innerHTML = `<div class="loading"><div class="loading-spinner"></div><p>Loading skill...</p></div>`;
+    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading skill\u2026</p></div>`;
 
     const html = await loadMarkdown(skill.file);
     const relatedBlueprints = CONTENT_REGISTRY.blueprints.filter(
@@ -256,11 +256,11 @@
       (b) => b.slug === slug
     );
     if (!blueprint) {
-      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Blueprint not found.</p></div>`;
+      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Blueprint not found. <a href="#/">Go home</a></p></div>`;
       return;
     }
 
-    mainEl.innerHTML = `<div class="loading"><div class="loading-spinner"></div><p>Loading blueprint...</p></div>`;
+    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading blueprint\u2026</p></div>`;
 
     const html = await loadMarkdown(blueprint.file);
     const skill = CONTENT_REGISTRY.skills.find(
@@ -296,7 +296,8 @@
     updateNav(route);
 
     // Scroll to top on navigation
-    window.scrollTo(0, 0);
+    const motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: motionOk ? "smooth" : "instant" });
 
     if (route === "/" || route === "") {
       renderHome();
