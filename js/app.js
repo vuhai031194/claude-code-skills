@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  // Configure marked
   marked.setOptions({
     breaks: true,
     gfm: true,
@@ -15,17 +14,11 @@
 
   const mainEl = document.getElementById("main");
 
-  // Router
   function getRoute() {
     const hash = window.location.hash || "#/";
-    return hash.slice(1); // remove #
+    return hash.slice(1);
   }
 
-  function navigate(path) {
-    window.location.hash = path;
-  }
-
-  // Update active nav link
   function updateNav(route) {
     document.querySelectorAll(".nav-link").forEach((link) => {
       const href = link.getAttribute("href").slice(1);
@@ -37,7 +30,6 @@
     });
   }
 
-  // Fetch and render markdown
   async function loadMarkdown(filePath) {
     try {
       const res = await fetch(filePath);
@@ -49,7 +41,6 @@
     }
   }
 
-  // Render helpers
   function renderTags(tags) {
     return tags.map((t) => `<span class="tag">${t}</span>`).join("");
   }
@@ -69,6 +60,22 @@
         return `<span>${item.label}</span>`;
       })
       .join("")}</nav>`;
+  }
+
+  // Stagger card animations after render
+  function animateCards() {
+    const cards = mainEl.querySelectorAll(".card");
+    cards.forEach((card, i) => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(16px)";
+      card.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, 80 * i);
+      });
+    });
   }
 
   // Page: Home
@@ -105,6 +112,7 @@
 
     mainEl.innerHTML = `
       <div class="hero">
+        <span class="hero-label">Research Terminal v1.0</span>
         <h1>${site.title}</h1>
         <p>${site.subtitle}</p>
       </div>
@@ -125,6 +133,7 @@
         <div class="card-grid">${blueprintCards}</div>
       </div>
     `;
+    animateCards();
   }
 
   // Page: Skills list
@@ -157,17 +166,18 @@
         <div class="card-grid">${cards}</div>
       </div>
     `;
+    animateCards();
   }
 
   // Page: Skill detail
   async function renderSkillDetail(slug) {
     const skill = CONTENT_REGISTRY.skills.find((s) => s.slug === slug);
     if (!skill) {
-      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Skill not found. <a href="#/">Go home</a></p></div>`;
+      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">\u{1F50D}</div><p>Skill not found. <a href="#/">Go home</a></p></div>`;
       return;
     }
 
-    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading skill\u2026</p></div>`;
+    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading\u2026</p></div>`;
 
     const html = await loadMarkdown(skill.file);
     const relatedBlueprints = CONTENT_REGISTRY.blueprints.filter(
@@ -178,7 +188,7 @@
       relatedBlueprints.length > 0
         ? `
       <div class="related-section">
-        <h2>Blueprints from this Skill</h2>
+        <h2>Blueprints from This Skill</h2>
         <div class="card-grid">
           ${relatedBlueprints
             .map(
@@ -214,6 +224,7 @@
       <div class="markdown-body">${html}</div>
       ${relatedHtml}
     `;
+    animateCards();
   }
 
   // Page: Blueprints list
@@ -248,6 +259,7 @@
         <div class="card-grid">${cards}</div>
       </div>
     `;
+    animateCards();
   }
 
   // Page: Blueprint detail
@@ -256,11 +268,11 @@
       (b) => b.slug === slug
     );
     if (!blueprint) {
-      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Blueprint not found. <a href="#/">Go home</a></p></div>`;
+      mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">\u{1F50D}</div><p>Blueprint not found. <a href="#/">Go home</a></p></div>`;
       return;
     }
 
-    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading blueprint\u2026</p></div>`;
+    mainEl.innerHTML = `<div class="loading" aria-live="polite"><div class="loading-spinner"></div><p>Loading\u2026</p></div>`;
 
     const html = await loadMarkdown(blueprint.file);
     const skill = CONTENT_REGISTRY.skills.find(
@@ -290,12 +302,11 @@
     `;
   }
 
-  // Router dispatch
+  // Router
   function dispatch() {
     const route = getRoute();
     updateNav(route);
 
-    // Scroll to top on navigation
     const motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: 0, behavior: motionOk ? "smooth" : "instant" });
 
@@ -304,19 +315,16 @@
     } else if (route === "/skills") {
       renderSkillsList();
     } else if (route.startsWith("/skills/")) {
-      const slug = route.replace("/skills/", "");
-      renderSkillDetail(slug);
+      renderSkillDetail(route.replace("/skills/", ""));
     } else if (route === "/blueprints") {
       renderBlueprintsList();
     } else if (route.startsWith("/blueprints/")) {
-      const slug = route.replace("/blueprints/", "");
-      renderBlueprintDetail(slug);
+      renderBlueprintDetail(route.replace("/blueprints/", ""));
     } else {
       mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">404</div><p>Page not found. <a href="#/">Go home</a></p></div>`;
     }
   }
 
-  // Init
   window.addEventListener("hashchange", dispatch);
   dispatch();
 })();
