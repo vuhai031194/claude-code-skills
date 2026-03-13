@@ -17,6 +17,26 @@ const CONTENT_REGISTRY = {
   ],
   blueprints: [
     {
+      slug: "idle-pet-creature-rpg",
+      title: "Idle Pet/Creature Collection RPG",
+      description: "Complete design blueprint for a gender-inclusive idle RPG where players hatch, raise, evolve, and battle cute creatures — combining Pokemon-like collection with Egg Inc. prestige loops and habitat decoration.",
+      file: "content/blueprints/idle-pet-creature-rpg.md",
+      skill: "mobile-idle-game-research",
+      date: "2026-03-13",
+      tags: ["idle RPG", "pet collection", "gender-inclusive", "blueprint", "game design"],
+      icon: "🐾"
+    },
+    {
+      slug: "idle-games-mass-market-gender-inclusive",
+      title: "Idle Games: Mass-Market Gender-Inclusive Appeal",
+      description: "Market overview analyzing idle games that attract both male and female players equally — gender demographics, design formulas, feature matrices, and whitespace opportunities for mass-market appeal.",
+      file: "content/blueprints/idle-games-mass-market-gender-inclusive.md",
+      skill: "mobile-idle-game-research",
+      date: "2026-03-13",
+      tags: ["idle games", "gender-inclusive", "market overview", "demographics"],
+      icon: "👫"
+    },
+    {
       slug: "idle-rpg-market-overview",
       title: "Idle RPG Market Overview 2026",
       description: "Comprehensive market overview of the idle RPG mobile game category — top games ranked, feature matrix, Porter's Five Forces, emerging trends, whitespace opportunities, and market entry recommendations with CPI/LTV benchmarks.",
