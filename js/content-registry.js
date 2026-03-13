@@ -13,6 +13,15 @@ const CONTENT_REGISTRY = {
       tags: ["gaming", "research", "mobile", "idle RPG"],
       modes: ["Deep Dive", "Comparison", "Market Overview", "Design Blueprint"],
       icon: "🎮"
+    },
+    {
+      slug: "rpg-game-research",
+      title: "RPG Game Research",
+      description: "Mobile RPG game research and analysis expert covering all sub-genres — idle RPG, action RPG, turn-based RPG, MMORPG, roguelike RPG, tactical RPG, monster collector, and hybrid/merge RPG. Includes KPI benchmarks, gacha economics, and design blueprints.",
+      file: "content/skills/rpg-game-research.md",
+      tags: ["gaming", "research", "RPG", "gacha", "mobile"],
+      modes: ["Deep Dive", "Comparison", "Market Overview", "Design Blueprint"],
+      icon: "⚔️"
     }
   ],
   blueprints: [
@@ -55,6 +64,16 @@ const CONTENT_REGISTRY = {
       date: "2026-03-12",
       tags: ["idle RPG", "merge", "blueprint", "game design"],
       icon: "📋"
+    },
+    {
+      slug: "idle-rpg-history",
+      title: "The Evolution of Idle RPGs: From Browser Curiosity to Billion-Dollar Genre",
+      description: "Complete history of idle RPGs from Progress Quest (2002) through MapleStory: Idle RPG (2026) — covering 7 evolutionary phases, revenue rankings, feature evolution matrix, mechanics analysis, and market entry opportunities.",
+      file: "content/blueprints/idle-rpg-history.md",
+      skill: "rpg-game-research",
+      date: "2026-03-13",
+      tags: ["idle RPG", "history", "market overview", "evolution", "revenue"],
+      icon: "📜"
     }
   ]
 };
