@@ -320,6 +320,8 @@
       renderBlueprintsList();
     } else if (route.startsWith("/blueprints/")) {
       renderBlueprintDetail(route.replace("/blueprints/", ""));
+    } else if (route === "/ags" || route.startsWith("/ags/")) {
+      window.AGSRenderer.render(mainEl, route);
     } else {
       mainEl.innerHTML = `<div class="empty-state"><div class="empty-state-icon">404</div><p>Page not found. <a href="#/">Go home</a></p></div>`;
     }
