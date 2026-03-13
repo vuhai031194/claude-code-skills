@@ -17,6 +17,16 @@ const CONTENT_REGISTRY = {
   ],
   blueprints: [
     {
+      slug: "idle-rpg-market-overview",
+      title: "Idle RPG Market Overview 2026",
+      description: "Comprehensive market overview of the idle RPG mobile game category — top games ranked, feature matrix, Porter's Five Forces, emerging trends, whitespace opportunities, and market entry recommendations with CPI/LTV benchmarks.",
+      file: "content/blueprints/idle-rpg-market-overview.md",
+      skill: "mobile-idle-game-research",
+      date: "2026-03-13",
+      tags: ["idle RPG", "market overview", "trends", "benchmarks"],
+      icon: "📊"
+    },
+    {
       slug: "idle-rpg-merge-mechanics",
       title: "Idle RPG with Merge Mechanics",
       description: "Complete design blueprint for a mobile idle RPG combining merge board mechanics with hero collection, auto-battle, and deep progression systems.",
